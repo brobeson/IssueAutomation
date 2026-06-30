@@ -1,19 +1,19 @@
 name: Issue and PR Automation
 on:
   workflow_call:
-    # inputs:
-    #   project_id:
-    #     required: true
-    #     description: The numeric ID of the Github project
-    #     type: number
+    inputs:
+      project_owner:
+        required: true
+        description: The ID for the user who owns the project
+        type: string
+      project_id:
+        required: true
+        description: The numeric ID of the Github project
+        type: number
     secrets:
       personal_access_token:
         required: true
         description: An access token with `project` permission
-  # issues:
-  #   types: [opened, reopened, transferred]
-  # pull_request:
-  #   types: [opened, reopened]
 
 jobs:
   add-to-project:
@@ -23,5 +23,5 @@ jobs:
       - name: Add to project
         uses: actions/add-to-project@v2
         with:
-          project-url: https://github.com/users/brobeson/projects/17
+          project-url: https://github.com/users/${{ inputs.project_owner }}/projects/${{ inputs.project_id }}
           github-token: ${{ secrets.personal_access_token }}
